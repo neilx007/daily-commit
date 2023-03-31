@@ -7,16 +7,17 @@ on:
 jobs:
   commit:
     runs-on: ubuntu-latest
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      
     - name: Modify File
       run: |
         echo "# Add a new line" >> ./commit_file
-    - name: Commit Changes
-      run: |
-        git config --global user.email "neilx007@outlook.com"
-        git config --global user.name "neilx007"
-        git add commit_file
-        git commit -m "Daily commit"
-        git push
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Daily Commit
