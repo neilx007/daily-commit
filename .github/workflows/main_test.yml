@@ -1,0 +1,20 @@
+name: Daily Commit
+
+on: push
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    - name: Modify File
+      run: |
+        echo "# Add a new line" >> ./commit_file
+    - name: Commit Changes
+      run: |
+        git config --global user.email "neilx007@outlook.com"
+        git config --global user.name "neilx007"
+        git add commit_file
+        git commit -m "Daily commit"
+        git push
